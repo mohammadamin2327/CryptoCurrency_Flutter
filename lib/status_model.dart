@@ -1,20 +1,27 @@
 import 'package:json_annotation/json_annotation.dart';
-part'status.g.dart';
+part'status_model.g.dart';
 
 @JsonSerializable()
-class StatusModel {
-  String? _timestamp;
-  int? _errorCode;
-  Null? _errorMessage;
-  int? _elapsed;
-  int? _creditCount;
-  Null? _notice;
-  int? _totalCount;
+class Status {
+  
+  String? timestamp;
 
-  StatusModel(this._timestamp,this._errorCode,this._errorMessage,this._elapsed,this._creditCount,this._notice,
-  this._totalCount);
+  num? errorCode;
 
-  factory Status.fromJson(Map<String, dynamic> json) => _StatusFromJson(json);
+  dynamic errorMessage;
+
+  num? elapsed;
+
+  num? creditCount;
+
+  dynamic notice;
+
+  num? totalCount;
+
+  Status(this.timestamp,this.errorCode,this.errorMessage,this.elapsed,this.creditCount,this.notice,
+  this.totalCount);
+
+  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
 
   Map<String, dynamic> toJson() => _$StatusToJson(this);
 }

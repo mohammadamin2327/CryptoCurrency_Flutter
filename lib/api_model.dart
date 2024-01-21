@@ -5,13 +5,14 @@ part'api_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ApiModel {
-  ApiModel({required this.data, required this.status});
 
   Status? status;
+
   List<Data?>? data;
 
-  factory ApiModel.fromJson(Map<String, dynamic> json) =>
-      _$ApiModelFromJson(json);
+  ApiModel(this.data,this.status);
+
+  factory ApiModel.fromJson(Map<String, dynamic> json) => _$ApiModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApiModelToJson(this);
 }

@@ -1,3 +1,4 @@
+import 'package:coinmarketcap/bottom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,12 +11,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Column(
-        children: [
-          //TODO: BottomAppBar
-        ],
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: const BottomAppBarItem(),
+        appBar: AppBar(),
+        body: const Column(
+          children: [
+          ],
+        ),
       ),
     );
   }

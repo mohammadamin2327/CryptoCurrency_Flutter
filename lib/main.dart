@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../home_screen.dart';
-import '../api_call.dart';
 
-void main(){
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      systemNavigationBarColor: Colors.white,
+    ),
+  );
   runApp(const MainScreen());
 }
 
@@ -11,8 +17,12 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
     );
   }
 }
