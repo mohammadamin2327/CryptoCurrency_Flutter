@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../home_screen.dart';
+import 'view/home_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -9,7 +9,9 @@ void main() {
       systemNavigationBarColor: Colors.white,
     ),
   );
-  runApp(const MainScreen());
+  runApp(
+    const MainScreen(),
+  );
 }
 
 class MainScreen extends StatelessWidget {
@@ -18,6 +20,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'coninMarketCap',
       theme: ThemeData(
         useMaterial3: true,
       ),

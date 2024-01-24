@@ -1,4 +1,4 @@
-import 'package:coinmarketcap/api_model.dart';
+import 'package:coinmarketcap/model/api_model.dart';
 import 'package:dio/dio.dart';
 
 class ApiCall {
@@ -20,5 +20,6 @@ class ApiCall {
     }
   }
 }
+
 /* note: this file try to get data from server and if everything was good the return data(json) send to 
  fromJson method for parse it and use them in app. */

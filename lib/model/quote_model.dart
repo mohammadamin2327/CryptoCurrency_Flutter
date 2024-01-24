@@ -1,5 +1,5 @@
+import 'package:coinmarketcap/model/usd_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:coinmarketcap/usd_model.dart';
 part'quote_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)

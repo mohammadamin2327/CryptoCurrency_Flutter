@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-part'usd_model.g.dart';
+part 'usd_model.g.dart';
 
 @JsonSerializable()
 class USD {
-
   num? price;
 
   num? volume24h;
@@ -32,9 +31,22 @@ class USD {
 
   String? lastUpdated;
 
-  USD(this.price,this.volume24h,this.volumeChange24h,this.percentChange1h,this.percentChange24h,
-      this.percentChange7d,this.percentChange30d,this.percentChange60d,this.percentChange90d,
-      this.marketCap,this.marketCapDominance,this.fullyDilutedMarketCap,this.tvl,this.lastUpdated);
+  USD(
+    this.price,
+    this.volume24h,
+    this.volumeChange24h,
+    this.percentChange1h,
+    this.percentChange24h,
+    this.percentChange7d,
+    this.percentChange30d,
+    this.percentChange60d,
+    this.percentChange90d,
+    this.marketCap,
+    this.marketCapDominance,
+    this.fullyDilutedMarketCap,
+    this.tvl,
+    this.lastUpdated,
+  );
 
   factory USD.fromJson(Map<String, dynamic> json) => _$USDFromJson(json);
 
