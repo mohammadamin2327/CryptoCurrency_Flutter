@@ -7,8 +7,8 @@ part of 'api_model.dart';
 // **************************************************************************
 
 ApiModel _$ApiModelFromJson(Map<String, dynamic> json) => ApiModel(
-      (json['data'] as List<dynamic>?)
-          ?.map((e) =>
+      (json['data'] as List<dynamic>)
+          .map((e) =>
               e == null ? null : Data.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['status'] == null
@@ -18,5 +18,5 @@ ApiModel _$ApiModelFromJson(Map<String, dynamic> json) => ApiModel(
 
 Map<String, dynamic> _$ApiModelToJson(ApiModel instance) => <String, dynamic>{
       'status': instance.status?.toJson(),
-      'data': instance.data?.map((e) => e?.toJson()).toList(),
+      'data': instance.data.map((e) => e?.toJson()).toList(),
     };

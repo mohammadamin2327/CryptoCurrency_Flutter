@@ -7,7 +7,7 @@ part 'api_model.g.dart';
 class ApiModel {
   Status? status;
 
-  List<Data?>? data;
+  List<Data?> data;
 
   ApiModel(
     this.data,

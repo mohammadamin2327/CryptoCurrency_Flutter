@@ -4,7 +4,7 @@ part 'data_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Data {
-  num? id;
+  int? id;
 
   String? name;
 
@@ -12,7 +12,7 @@ class Data {
 
   String? slug;
 
-  num? numMarketPairs;
+  int? numMarketPairs;
 
   String? dateAdded;
 
@@ -26,13 +26,13 @@ class Data {
 
   bool? infiniteSupply;
 
-  num? cmcRank;
+  int? cmcRank;
 
-  dynamic selfReportedCirculatingSupply;
+  num? selfReportedCirculatingSupply;
 
-  dynamic selfReportedMarketCap;
+  num? selfReportedMarketCap;
 
-  dynamic tvlRatio;
+  num? tvlRatio;
 
   String? lastUpdated;
 

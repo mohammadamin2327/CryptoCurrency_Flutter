@@ -27,7 +27,7 @@ class USD {
 
   num? fullyDilutedMarketCap;
 
-  dynamic tvl;
+  num? tvl;
 
   String? lastUpdated;
 

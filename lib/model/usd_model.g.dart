@@ -19,7 +19,7 @@ USD _$USDFromJson(Map<String, dynamic> json) => USD(
       json['marketCap'] as num?,
       json['marketCapDominance'] as num?,
       json['fullyDilutedMarketCap'] as num?,
-      json['tvl'],
+      json['tvl'] as num?,
       json['lastUpdated'] as String?,
     );
 

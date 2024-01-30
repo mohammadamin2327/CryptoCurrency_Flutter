@@ -8,11 +8,11 @@ part of 'status_model.dart';
 
 Status _$StatusFromJson(Map<String, dynamic> json) => Status(
       json['timestamp'] as String?,
-      json['errorCode'] as num?,
-      json['errorMessage'],
-      json['elapsed'] as num?,
-      json['creditCount'] as num?,
-      json['notice'],
+      json['errorCode'] as int?,
+      json['errorMessage'] as String?,
+      json['elapsed'] as int?,
+      json['creditCount'] as int?,
+      json['notice'] as String?,
       json['totalCount'] as num?,
     );
 

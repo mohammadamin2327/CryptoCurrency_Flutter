@@ -7,21 +7,21 @@ part of 'data_model.dart';
 // **************************************************************************
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      json['id'] as num?,
+      json['id'] as int?,
       json['name'] as String?,
       json['symbol'] as String?,
       json['slug'] as String?,
-      json['numMarketPairs'] as num?,
+      json['numMarketPairs'] as int?,
       json['dateAdded'] as String?,
       (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       json['maxSupply'] as num?,
       json['circulatingSupply'] as num?,
       json['totalSupply'] as num?,
       json['infiniteSupply'] as bool?,
-      json['cmcRank'] as num?,
-      json['selfReportedCirculatingSupply'],
-      json['selfReportedMarketCap'],
-      json['tvlRatio'],
+      json['cmcRank'] as int?,
+      json['selfReportedCirculatingSupply'] as num?,
+      json['selfReportedMarketCap'] as num?,
+      json['tvlRatio'] as num?,
       json['lastUpdated'] as String?,
       json['quote'] == null
           ? null

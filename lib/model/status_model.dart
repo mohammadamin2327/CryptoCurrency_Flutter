@@ -5,15 +5,15 @@ part 'status_model.g.dart';
 class Status {
   String? timestamp;
 
-  num? errorCode;
+  int? errorCode;
 
-  dynamic errorMessage;
+  String? errorMessage;
 
-  num? elapsed;
+  int? elapsed;
 
-  num? creditCount;
+  int? creditCount;
 
-  dynamic notice;
+  String? notice;
 
   num? totalCount;
 
