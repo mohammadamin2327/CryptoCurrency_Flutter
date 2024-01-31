@@ -14,9 +14,13 @@ ApiModel _$ApiModelFromJson(Map<String, dynamic> json) => ApiModel(
       json['status'] == null
           ? null
           : Status.fromJson(json['status'] as Map<String, dynamic>),
+      json['meta'] == null
+          ? null
+          : Meta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ApiModelToJson(ApiModel instance) => <String, dynamic>{
-      'status': instance.status?.toJson(),
       'data': instance.data.map((e) => e?.toJson()).toList(),
+      'status': instance.status?.toJson(),
+      'meta': instance.meta?.toJson(),
     };

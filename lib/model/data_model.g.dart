@@ -7,43 +7,47 @@ part of 'data_model.dart';
 // **************************************************************************
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
-      json['id'] as int?,
+      json['id'] as num?,
+      json['rank'] as num?,
+      json['slug'] as String?,
       json['name'] as String?,
       json['symbol'] as String?,
-      json['slug'] as String?,
-      json['numMarketPairs'] as int?,
-      json['dateAdded'] as String?,
-      (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      json['maxSupply'] as num?,
+      json['category'] as String?,
+      json['type'] as String?,
+      json['volume24hBase'] as num?,
       json['circulatingSupply'] as num?,
       json['totalSupply'] as num?,
-      json['infiniteSupply'] as bool?,
-      json['cmcRank'] as int?,
-      json['selfReportedCirculatingSupply'] as num?,
-      json['selfReportedMarketCap'] as num?,
-      json['tvlRatio'] as num?,
-      json['lastUpdated'] as String?,
-      json['quote'] == null
+      json['maxSupply'] as num?,
+      json['values'] == null
           ? null
-          : Quote.fromJson(json['quote'] as Map<String, dynamic>),
+          : Values.fromJson(json['values'] as Map<String, dynamic>),
+      json['lastUpdated'] as String?,
+      (json['tokens'] as List<dynamic>?)
+          ?.map((e) => Tokens.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['links'] as List<dynamic>?)
+          ?.map((e) => Links.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['images'] == null
+          ? null
+          : Images.fromJson(json['images'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
+      'rank': instance.rank,
+      'slug': instance.slug,
       'name': instance.name,
       'symbol': instance.symbol,
-      'slug': instance.slug,
-      'numMarketPairs': instance.numMarketPairs,
-      'dateAdded': instance.dateAdded,
-      'tags': instance.tags,
-      'maxSupply': instance.maxSupply,
+      'category': instance.category,
+      'type': instance.type,
+      'volume24hBase': instance.volume24hBase,
       'circulatingSupply': instance.circulatingSupply,
       'totalSupply': instance.totalSupply,
-      'infiniteSupply': instance.infiniteSupply,
-      'cmcRank': instance.cmcRank,
-      'selfReportedCirculatingSupply': instance.selfReportedCirculatingSupply,
-      'selfReportedMarketCap': instance.selfReportedMarketCap,
-      'tvlRatio': instance.tvlRatio,
+      'maxSupply': instance.maxSupply,
+      'values': instance.values?.toJson(),
       'lastUpdated': instance.lastUpdated,
-      'quote': instance.quote?.toJson(),
+      'tokens': instance.tokens?.map((e) => e.toJson()).toList(),
+      'links': instance.links?.map((e) => e.toJson()).toList(),
+      'images': instance.images?.toJson(),
     };

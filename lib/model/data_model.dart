@@ -1,61 +1,46 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'quote_model.dart';
+import 'values.dart';
+import 'images.dart';
+import 'tokens.dart';
+import 'links.dart';
 part 'data_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Data {
-  int? id;
-
-  String? name;
-
-  String? symbol;
-
+  num? id;
+  num? rank;
   String? slug;
-
-  int? numMarketPairs;
-
-  String? dateAdded;
-
-  List<String>? tags;
-
-  num? maxSupply;
-
+  String? name;
+  String? symbol;
+  String? category;
+  String? type;
+  num? volume24hBase;
   num? circulatingSupply;
-
   num? totalSupply;
-
-  bool? infiniteSupply;
-
-  int? cmcRank;
-
-  num? selfReportedCirculatingSupply;
-
-  num? selfReportedMarketCap;
-
-  num? tvlRatio;
-
+  num? maxSupply;
+  Values? values;
   String? lastUpdated;
-
-  Quote? quote;
+  List<Tokens>? tokens;
+  List<Links>? links;
+  Images? images;
 
   Data(
     this.id,
+    this.rank,
+    this.slug,
     this.name,
     this.symbol,
-    this.slug,
-    this.numMarketPairs,
-    this.dateAdded,
-    this.tags,
-    this.maxSupply,
+    this.category,
+    this.type,
+    this.volume24hBase,
     this.circulatingSupply,
     this.totalSupply,
-    this.infiniteSupply,
-    this.cmcRank,
-    this.selfReportedCirculatingSupply,
-    this.selfReportedMarketCap,
-    this.tvlRatio,
+    this.maxSupply,
+    this.values,
     this.lastUpdated,
-    this.quote,
+    this.tokens,
+    this.links,
+    this.images,
   );
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);

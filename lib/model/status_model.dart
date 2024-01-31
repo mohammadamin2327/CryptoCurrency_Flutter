@@ -3,31 +3,28 @@ part 'status_model.g.dart';
 
 @JsonSerializable()
 class Status {
-  String? timestamp;
+bool? success;
 
-  int? errorCode;
+String? time;
 
-  String? errorMessage;
+num? code;
 
-  int? elapsed;
+String? message;
 
-  int? creditCount;
+num? responseTime;
 
-  String? notice;
+num? creditsCost;
 
-  num? totalCount;
+Status(
+  this.success,
+  this.time,
+  this.code,
+  this.message,
+  this.responseTime,
+  this.creditsCost,
+);
 
-  Status(
-    this.timestamp,
-    this.errorCode,
-    this.errorMessage,
-    this.elapsed,
-    this.creditCount,
-    this.notice,
-    this.totalCount,
-  );
-
-  factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
+factory Status.fromJson(Map<String, dynamic> json) => _$StatusFromJson(json);
 
   Map<String, dynamic> toJson() => _$StatusToJson(this);
 }

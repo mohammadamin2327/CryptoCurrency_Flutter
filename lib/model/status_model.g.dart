@@ -7,21 +7,19 @@ part of 'status_model.dart';
 // **************************************************************************
 
 Status _$StatusFromJson(Map<String, dynamic> json) => Status(
-      json['timestamp'] as String?,
-      json['errorCode'] as int?,
-      json['errorMessage'] as String?,
-      json['elapsed'] as int?,
-      json['creditCount'] as int?,
-      json['notice'] as String?,
-      json['totalCount'] as num?,
+      json['success'] as bool?,
+      json['time'] as String?,
+      json['code'] as num?,
+      json['message'] as String?,
+      json['responseTime'] as num?,
+      json['creditsCost'] as num?,
     );
 
 Map<String, dynamic> _$StatusToJson(Status instance) => <String, dynamic>{
-      'timestamp': instance.timestamp,
-      'errorCode': instance.errorCode,
-      'errorMessage': instance.errorMessage,
-      'elapsed': instance.elapsed,
-      'creditCount': instance.creditCount,
-      'notice': instance.notice,
-      'totalCount': instance.totalCount,
+      'success': instance.success,
+      'time': instance.time,
+      'code': instance.code,
+      'message': instance.message,
+      'responseTime': instance.responseTime,
+      'creditsCost': instance.creditsCost,
     };
