@@ -1,5 +1,3 @@
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coinmarketcap/service/api_call.dart';
 import 'package:coinmarketcap/model/api_model.dart';
 import 'package:coinmarketcap/utils/constants.dart';
@@ -19,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final ApiCall apiProvider;
   late final TextEditingController textEditingController;
+  final NumberFormat numberFormat = NumberFormat('0,000.00', 'en_US');
 
   @override
   void initState() {
@@ -28,8 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    textEditingController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var numberFormat = NumberFormat('0,000.00', 'en_US');
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 241, 241, 241),
@@ -41,50 +45,85 @@ class _HomeScreenState extends State<HomeScreen> {
               ApiModel? allData = snapshot.data;
               return Column(
                 children: <Widget>[
-                  setText('Crypto Currency'),
-                  TextField(
-                    controller: textEditingController,
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          tileColor: Colors.white,
-                          title: Text('${allData!.data[index]!.symbol}'),
-                          subtitle: Text('${allData.data[index]!.name}'),
-                          // leading: CachedNetworkImage(
-                          //   imageUrl: '${allData.data[index]!.images!.size60}',
-                          //   placeholder: (context, url) =>
-                          //       const CircularStepProgressIndicator(
-                          //     totalSteps: 100,
-                          //     selectedColor: Colors.blueAccent,
-                          //     unselectedColor: Colors.transparent,
-                          //     currentStep: 0,
-                          //     width: 100,
-                          //     height: 100,
-                          //     stepSize: 10,
-                          //     circularDirection: CircularDirection.clockwise,
-                          //   ),
-                          //   errorWidget: (context, url, error) =>
-                          //       const Icon(Icons.error_outline_sharp),
-                          // ),
-                          trailing: Column(
-                            children: <Widget>[
-                              Text(
-                                  '\$${numberFormat.format(allData.data[index]!.values!.usd!.price!)}'),
-                              stringPercentChange(allData
-                                  .data[index]!.values!.usd!.percentChange24h!),
-                            ],
+                  Container(
+                    color: Colors.white,
+                    width: double.infinity,
+                    height: (MediaQuery.of(context).size.height) / 4.5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: setText('Crypto Currency',35),
                           ),
                         ),
-                      );
-                    },
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: textEditingController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: const Color.fromARGB(180, 216, 216, 216),
+                              prefixIcon: const Icon(Icons.search_outlined),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              hintText: 'Search',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            tileColor: Colors.white,
+                            title: setNumberText(
+                              '${allData!.data[index]!.symbol}',
+                              23,
+                              FontWeight.w400,
+                              Colors.black,
+                            ),
+                            subtitle: setNumberText(
+                              '${allData.data[index]!.name}',
+                              20,
+                              FontWeight.w300,
+                              Colors.grey,
+                            ),
+                            trailing: Column(
+                              children: <Widget>[
+                                setNumberText(
+                                    '\$${numberFormat.format(allData.data[index]!.values!.usd!.price!)}',
+                                    20,
+                                    FontWeight.w400,
+                                    Colors.black),
+                                Flexible(
+                                    child: stringPercentChange(allData
+                                        .data[index]!
+                                        .values!
+                                        .usd!
+                                        .percentChange24h!)),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               );
@@ -95,39 +134,59 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: <Widget>[
-                        const CircleAvatar(),
-                        Column(
-                          children: <Widget>[
-                            Container(
-                              color: Colors.grey,
-                              width: 10,
-                              height: 10,
-                            ),
-                            Container(
-                              color: Colors.grey,
-                              width: 10,
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Column(
-                          children: <Widget>[
-                            Container(
-                              color: Colors.grey,
-                              width: 10,
-                              height: 10,
-                            ),
-                            Container(
-                              color: Colors.grey,
-                              width: 10,
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                      ],
+                    return Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        children: <Widget>[
+                          const CircleAvatar(
+                            radius: 40,
+                          ),
+                          const SizedBox(width: 15.0,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.grey,
+                                ),
+                                width: (MediaQuery.of(context).size.width) / 1.67,
+                                height: MediaQuery.of(context).size.height / 20,
+                              ),
+                              const SizedBox(height: 10,),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.grey,
+                                ),
+                                width: (MediaQuery.of(context).size.width) / 1.67,
+                                height: MediaQuery.of(context).size.height / 20,
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.grey,
+                                ),
+                                width: (MediaQuery.of(context).size.width) / 5,
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.grey,
+                                ),
+                                width: (MediaQuery.of(context).size.width) / 5,
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -139,4 +198,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

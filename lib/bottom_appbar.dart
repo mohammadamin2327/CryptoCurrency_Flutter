@@ -13,7 +13,7 @@ class _BottomAppBarItemState extends State<BottomAppBarItem> {
     return BottomAppBar(
       color: Colors.amber,
       elevation: 4.0,
-      height: (MediaQuery.of(context).size.height) / 6,
+      height: (MediaQuery.of(context).size.height) / 12,
       shape: const CircularNotchedRectangle()
     );
   }
