@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: setText('Crypto Currency',35),
+                            child: setText('Crypto Currency', 35),
                           ),
                         ),
                         Padding(
@@ -66,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: const Color.fromARGB(180, 216, 216, 216),
+                              fillColor:
+                                  const Color.fromARGB(180, 216, 216, 216),
                               prefixIcon: const Icon(Icons.search_outlined),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -106,18 +107,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               Colors.grey,
                             ),
                             trailing: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
-                                setNumberText(
+                                Flexible(
+                                  child: setNumberText(
                                     '\$${numberFormat.format(allData.data[index]!.values!.usd!.price!)}',
                                     20,
                                     FontWeight.w400,
-                                    Colors.black),
+                                    Colors.black,
+                                  ),
+                                ),
                                 Flexible(
-                                    child: stringPercentChange(allData
-                                        .data[index]!
-                                        .values!
-                                        .usd!
-                                        .percentChange24h!)),
+                                  child: stringPercentChange(
+                                    allData.data[index]!.values!.usd!
+                                        .percentChange24h!,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -141,25 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           const CircleAvatar(
                             radius: 40,
                           ),
-                          const SizedBox(width: 15.0,),
+                          const SizedBox(
+                            width: 15.0,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.grey,
+                                  color: Colors.grey,
                                 ),
-                                width: (MediaQuery.of(context).size.width) / 1.67,
+                                width:
+                                    (MediaQuery.of(context).size.width) / 1.67,
                                 height: MediaQuery.of(context).size.height / 20,
                               ),
-                              const SizedBox(height: 10,),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.grey,
+                                  color: Colors.grey,
                                 ),
-                                width: (MediaQuery.of(context).size.width) / 1.67,
+                                width:
+                                    (MediaQuery.of(context).size.width) / 1.67,
                                 height: MediaQuery.of(context).size.height / 20,
                               ),
                             ],
@@ -170,18 +181,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.grey,
+                                  color: Colors.grey,
                                 ),
                                 width: (MediaQuery.of(context).size.width) / 5,
+                                height: MediaQuery.of(context).size.height / 20,
+                              ),
+                              const SizedBox(
                                 height: 10,
                               ),
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.grey,
+                                  color: Colors.grey,
                                 ),
                                 width: (MediaQuery.of(context).size.width) / 5,
-                                height: 10,
+                                height: MediaQuery.of(context).size.height / 20,
                               ),
                             ],
                           ),
