@@ -1,6 +1,6 @@
 # coinmarketcap
 
-A new Flutter project that this application take data from server and use them in app for showing real time crypto currency data like price,name,chart and etc.
+A new Flutter project that this application takes data from server and use them in app for showing real time crypto currency data like price,name,chart and etc.
 I hope enjoy from this app.
 Thank you.
 
