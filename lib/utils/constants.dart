@@ -1,7 +1,8 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-Text setText(String? inputText,double fontSize) {
+Text setText(String? inputText, double fontSize) {
   return Text(
     inputText!,
     style: GoogleFonts.roboto(
@@ -12,7 +13,8 @@ Text setText(String? inputText,double fontSize) {
   );
 }
 
-Text setNumberText(String? inputNumberText,double fontSize,FontWeight fontWeight,Color color) {
+Text setNumberText(String? inputNumberText, double fontSize,
+    FontWeight fontWeight, Color color) {
   return Text(
     inputNumberText!,
     style: GoogleFonts.lato(
@@ -20,5 +22,18 @@ Text setNumberText(String? inputNumberText,double fontSize,FontWeight fontWeight
       fontWeight: fontWeight,
       fontSize: fontSize,
     ),
+  );
+}
+
+Container setContainer(
+    double? sizeWidth, double? sizeHeight, BuildContext context) {
+  Size screenSize = ((MediaQuery.of(context).size) / 3);
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12.0),
+      color: Colors.grey,
+    ),
+    width: (screenSize.width) * sizeWidth!,
+    height: (screenSize.height) * sizeHeight!,
   );
 }
