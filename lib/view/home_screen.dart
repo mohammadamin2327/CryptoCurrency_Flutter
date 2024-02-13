@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     5805,
   ];
   late final ApiCall apiProvider;
-  late Widget? bodyInput = null;
+  late Widget? bodyInput;
 
   @override
   void initState() {

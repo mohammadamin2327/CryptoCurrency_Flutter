@@ -37,3 +37,48 @@ Container setContainer(
     height: (screenSize.height) * sizeHeight!,
   );
 }
+
+Padding setRegisterText(
+    {String? text, double? fontSize, FontWeight? fontWeight, Color? color}) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 15),
+    child: Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        text!,
+        style: TextStyle(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+        ),
+      ),
+    ),
+  );
+}
+
+TextField setRegisterEmailTextField({
+  TextEditingController? textEdingController,
+}) {
+  return TextField(
+    cursorColor: Colors.black,
+    controller: textEdingController,
+    keyboardType: TextInputType.emailAddress,
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(
+          12,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: Colors.blueAccent,
+          width: 1.5,
+        ),
+        borderRadius: BorderRadius.circular(
+          12,
+        ),
+      ),
+      hintText: 'Email Address',
+    ),
+  );
+}

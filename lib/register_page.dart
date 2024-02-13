@@ -1,5 +1,6 @@
-import 'package:coinmarketcap/view/home_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:coinmarketcap/view/home_screen.dart';
+import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -41,53 +42,27 @@ class _RegisterPageState extends State<RegisterPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                titleScreen,
-                style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent),
-              ),
-            ),
+          setRegisterText(
+            text: titleScreen,
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueAccent,
+          ),
+          setRegisterText(
+            text: 'Welcome to our application \n $subTitleScreen',
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Welcome to our application \n $subTitleScreen',
-                style:
-                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ),
+            padding: const EdgeInsets.all(15.0),
+            child:
+                setRegisterEmailTextField(textEdingController: emailController),
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
-                  ),
-                ),
-                hintText: 'Email Address',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextField(
+              cursorColor: Colors.black,
               obscureText: visibilityPassword,
               obscuringCharacter: '•',
               controller: passwordController,
@@ -99,6 +74,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.blueAccent,
+                    width: 1.5,
+                  ),
                   borderRadius: BorderRadius.circular(
                     12,
                   ),
@@ -122,8 +101,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           SizedBox(
-            width: 200,
-            height: 70,
+            width: 250,
+            height: 55,
             child: ElevatedButton(
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.blueAccent),
@@ -135,12 +114,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 actionButtonText == 'Sign Up'
-                    ? signUpNewUser()
-                    : signInWithEmail();
+                    ? await signUpNewUser()
+                    : await signInWithEmail();
+                _setupAuthListener();
               },
-              child: Text(actionButtonText,style: const TextStyle(color: Colors.white,fontSize: 30),),
+              child: Text(
+                actionButtonText,
+                style: const TextStyle(color: Colors.white, fontSize: 30),
+              ),
             ),
           ),
           Row(
@@ -200,7 +183,14 @@ class _RegisterPageState extends State<RegisterPage> {
         debugPrint(data.toString());
         debugPrint(data.event.toString());
         final event = data.event;
-        if (event == AuthChangeEvent.signedIn) {
+        if(event == AuthChangeEvent.initialSession){
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        } 
+        else if (event == AuthChangeEvent.signedIn) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => const HomeScreen(),

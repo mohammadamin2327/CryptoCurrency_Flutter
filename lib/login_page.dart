@@ -1,5 +1,6 @@
-import 'package:coinmarketcap/view/home_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:coinmarketcap/view/home_screen.dart';
+import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/register_page.dart';
 import 'package:flutter/material.dart';
 
@@ -42,51 +43,27 @@ class _LogInPageState extends State<LogInPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  titleScreen,
-                  style: const TextStyle(
-                      color: Colors.blueAccent,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                )),
+          setRegisterText(
+            text: titleScreen,
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            color: Colors.blueAccent,
+          ),
+          setRegisterText(
+            text: 'Welcome to our application \n $subTitleScreen',
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Welcome to our application \n $subTitleScreen',
-                style: const TextStyle(fontSize: 30, color: Colors.black),
-              ),
-            ),
+            padding: const EdgeInsets.all(15.0),
+            child:
+                setRegisterEmailTextField(textEdingController: emailController),
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
-                  ),
-                ),
-                hintText: 'Email Address',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextField(
+              cursorColor: Colors.black,
               obscureText: visibilityPassword,
               obscuringCharacter: '•',
               controller: passwordController,
@@ -98,6 +75,10 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.blueAccent,
+                    width: 1.5,
+                  ),
                   borderRadius: BorderRadius.circular(
                     12,
                   ),
@@ -121,8 +102,8 @@ class _LogInPageState extends State<LogInPage> {
             ),
           ),
           SizedBox(
-            width: 200,
-            height: 70,
+            width: 250,
+            height: 55,
             child: ElevatedButton(
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Colors.blueAccent),
@@ -134,12 +115,16 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 actionButtonText == 'Log In'
-                    ? signUpNewUser()
-                    : signInWithEmail();
+                    ? await signUpNewUser()
+                    : await signInWithEmail();
+                _setupAuthListener();
               },
-              child: Text(actionButtonText,style: const TextStyle(color: Colors.white,fontSize: 30)),
+              child: Text(
+                actionButtonText,
+                style: const TextStyle(color: Colors.white, fontSize: 30),
+              ),
             ),
           ),
           Row(
@@ -160,9 +145,11 @@ class _LogInPageState extends State<LogInPage> {
                     },
                   );
                 },
-                child: Text(accountActionButton,
-                    style: const TextStyle(
-                        color: Colors.blueAccent, fontSize: 20)),
+                child: Text(
+                  accountActionButton,
+                  style:
+                      const TextStyle(color: Colors.blueAccent, fontSize: 20),
+                ),
               ),
             ],
           ),
@@ -171,21 +158,19 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
-  Future<AuthResponse> signUpNewUser() async {
+  Future<void> signUpNewUser() async {
     final AuthResponse responseSignUpAuth = await supabase.auth.signUp(
       email: emailController.text,
       password: passwordController.text,
     );
-    return responseSignUpAuth;
   }
 
-  Future<AuthResponse> signInWithEmail() async {
+  Future<void> signInWithEmail() async {
     final AuthResponse responseSignInAuth =
         await supabase.auth.signInWithPassword(
       email: emailController.text,
       password: passwordController.text,
     );
-    return responseSignInAuth;
   }
 
   Future<void> signOut() async {
