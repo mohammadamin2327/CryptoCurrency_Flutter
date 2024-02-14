@@ -1,9 +1,11 @@
+import 'package:coinmarketcap/password_text_form_field.dart';
+import 'package:coinmarketcap/register_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:coinmarketcap/view/home_page.dart';
 import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/login_page.dart';
-import 'text_form_field_settings.dart';
 import 'package:flutter/material.dart';
+import 'email_text_form_field.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,7 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String actionButtonText = 'Sign Up';
   String accountAction = 'Already have an account?';
   String accountActionButton = 'Log in';
-  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _setupAuthListener();
@@ -58,64 +59,16 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child:
-                TextFormFieldSettings(textEditingController: emailController,),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Form(
-              key: _formKey,
-              child: TextFormField(
-                cursorColor: Colors.black,
-                obscureText: visibilityPassword,
-                obscuringCharacter: '•',
-                controller: passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.blueAccent,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(
-                      12,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(
-                        () {
-                          visibilityPassword == true
-                              ? visibilityPassword = false
-                              : visibilityPassword = true;
-                        },
-                      );
-                    },
-                    icon: visibilityPassword == true
-                        ? const Icon(Icons.visibility_off)
-                        : const Icon(Icons.visibility),
-                  ),
-                  hintText: 'Password',
-                ),
-                validator: (value) {
-                  if(value == null || value.isEmpty){
-                    return 'Please enter your password';
-                  }else if(value.length < 6){
-                    return 'Your password must be 6 digits or more.';
-                  }else{
-                    return null;
-                  }
-                },
-              ),
+            child: TextFormFieldSettings(
+              textEditingController: emailController,
             ),
           ),
+          PasswordTextFormField(
+            textEditingController: passwordController,
+            visibilityPassword: visibilityPassword,
+          ),
           TextButton(
-            onPressed: (){
+            onPressed: () {
               var passwordRecovery = AuthChangeEvent.passwordRecovery;
               debugPrint(passwordRecovery.toString());
             },
@@ -137,8 +90,8 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               onPressed: () async {
                 actionButtonText == 'Sign Up'
-                    ? await signUpNewUser()
-                    : await signInWithEmail();
+                    ? await RegisterSettings().signUpNewUser(emailController, passwordController)
+                    : await RegisterSettings().signInWithEmail(emailController, passwordController);
                 _setupAuthListener();
               },
               child: Text(
@@ -175,27 +128,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
-  }
-
-  Future<AuthResponse> signUpNewUser() async {
-    final AuthResponse responseSignUpAuth = await supabase.auth.signUp(
-      email: emailController.text,
-      password: passwordController.text,
-    );
-    return responseSignUpAuth;
-  }
-
-  Future<AuthResponse> signInWithEmail() async {
-    final AuthResponse responseSignInAuth =
-        await supabase.auth.signInWithPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    );
-    return responseSignInAuth;
-  }
-
-  Future<void> signOut() async {
-    await supabase.auth.signOut();
   }
 
   void _setupAuthListener() {

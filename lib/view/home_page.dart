@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coinmarketcap/register_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:coinmarketcap/service/api_call.dart';
 import 'package:coinmarketcap/model/api_model.dart';
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                                             actions: [
                                               TextButton(
                                                 onPressed: () async {
-                                                  await supabase.auth.signOut();
+                                                  await RegisterSettings().signOut();
                                                 },
                                                 child: const Text('Accept'),
                                               ),
