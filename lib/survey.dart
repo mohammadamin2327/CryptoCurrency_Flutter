@@ -5,7 +5,7 @@ Text stringPercentChange(num percentChange24h){
   if(percentChange24h > 0.00){
     return setNumberText('${percentChange24h.toStringAsFixed(2)}%', 20, FontWeight.w400, Colors.green);
   }else if(percentChange24h == 0){
-    return setNumberText(percentChange24h.toStringAsFixed(2), 20, FontWeight.w300, Color.fromARGB(255, 26, 24, 24));
+    return setNumberText(percentChange24h.toStringAsFixed(2), 20, FontWeight.w300, const Color.fromARGB(255, 26, 24, 24));
   }else{
     return setNumberText('${percentChange24h.toStringAsFixed(2)}%', 20, FontWeight.w300, Colors.red);
   }

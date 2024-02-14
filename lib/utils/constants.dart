@@ -1,6 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 Text setText(String? inputText, double fontSize) {
   return Text(
@@ -52,33 +51,6 @@ Padding setRegisterText(
           color: color,
         ),
       ),
-    ),
-  );
-}
-
-TextField setRegisterEmailTextField({
-  TextEditingController? textEdingController,
-}) {
-  return TextField(
-    cursorColor: Colors.black,
-    controller: textEdingController,
-    keyboardType: TextInputType.emailAddress,
-    decoration: InputDecoration(
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(
-          12,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: Colors.blueAccent,
-          width: 1.5,
-        ),
-        borderRadius: BorderRadius.circular(
-          12,
-        ),
-      ),
-      hintText: 'Email Address',
     ),
   );
 }

@@ -1,7 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:coinmarketcap/view/home_screen.dart';
+import 'package:coinmarketcap/view/home_page.dart';
 import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/register_page.dart';
+import 'text_form_field_settings.dart';
 import 'package:flutter/material.dart';
 
 class LogInPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _LogInPageState extends State<LogInPage> {
   String actionButtonText = 'Log In';
   String accountAction = 'Don\'t have an account';
   String accountActionButton = 'Sign Up';
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -57,47 +59,64 @@ class _LogInPageState extends State<LogInPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child:
-                setRegisterEmailTextField(textEdingController: emailController),
+            child: TextFormFieldSettings(
+              textEditingController: emailController,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextField(
-              cursorColor: Colors.black,
-              obscureText: visibilityPassword,
-              obscuringCharacter: '•',
-              controller: passwordController,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
+            child: Form(
+              key: _formKey,
+              child: TextFormField(
+                cursorColor: Colors.black,
+                obscureText: visibilityPassword,
+                obscuringCharacter: '•',
+                controller: passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.blueAccent,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(
+                        () {
+                          visibilityPassword == true
+                              ? visibilityPassword = false
+                              : visibilityPassword = true;
+                        },
+                      );
+                    },
+                    icon: visibilityPassword == true
+                        ? const Icon(
+                            Icons.visibility_off,
+                          )
+                        : const Icon(
+                            Icons.visibility,
+                          ),
+                  ),
+                  hintText: 'Password',
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.blueAccent,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(
-                    12,
-                  ),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(
-                      () {
-                        visibilityPassword == true
-                            ? visibilityPassword = false
-                            : visibilityPassword = true;
-                      },
-                    );
+                validator: (value) {
+                    if(value == null || value.isEmpty){
+                      return 'Please enter your password';
+                    }else if(value.length < 6){
+                      return 'Your password must be 6 digits or more.';
+                    }else{
+                      return null;
+                    }
                   },
-                  icon: visibilityPassword == true
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-                hintText: 'Password',
               ),
             ),
           ),
@@ -106,7 +125,9 @@ class _LogInPageState extends State<LogInPage> {
             height: 55,
             child: ElevatedButton(
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.blueAccent),
+                backgroundColor: MaterialStatePropertyAll(
+                  Colors.blueAccent,
+                ),
                 shape: MaterialStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
@@ -123,7 +144,10 @@ class _LogInPageState extends State<LogInPage> {
               },
               child: Text(
                 actionButtonText,
-                style: const TextStyle(color: Colors.white, fontSize: 30),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
               ),
             ),
           ),
@@ -180,12 +204,12 @@ class _LogInPageState extends State<LogInPage> {
   void _setupAuthListener() {
     supabase.auth.onAuthStateChange.listen(
       (data) {
-        debugPrint(data.toString());
         final event = data.event;
+        debugPrint(AuthChangeEvent.values.toString());
         if (event == AuthChangeEvent.signedIn) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const HomePage(),
             ),
           );
         }

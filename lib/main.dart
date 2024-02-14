@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:coinmarketcap/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'view/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

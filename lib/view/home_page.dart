@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:coinmarketcap/service/api_call.dart';
 import 'package:coinmarketcap/model/api_model.dart';
 import 'package:coinmarketcap/utils/constants.dart';
@@ -8,16 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:intl/intl.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   final NumberFormat numberFormat = NumberFormat('0,000.00', 'en_US');
   late final TextEditingController textEditingController;
+  final SupabaseClient supabase = Supabase.instance.client;
   final List<int> integerDataSource = [
     1,
     1027,
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   late final ApiCall apiProvider;
   late Widget? bodyInput;
+  var defaultValue = '';
 
   @override
   void initState() {
@@ -65,6 +68,57 @@ class _HomeScreenState extends State<HomeScreen> {
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          DropdownButton(
+                            //value: defaultValue,
+                            items: [
+                              DropdownMenuItem(
+                                value: defaultValue,
+                                child: TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('Log out'),
+                                            content: const Text(
+                                                'Do you want to Log out?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await supabase.auth.signOut();
+                                                },
+                                                child: const Text('Accept'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: const Text('Log out'),
+                                ),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                defaultValue = value!;
+                              });
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.logout_outlined,
+                          size: 40,
+                        ),
+                      )
+                    ],
                     title: Padding(
                       padding: const EdgeInsets.all(
                         8.0,

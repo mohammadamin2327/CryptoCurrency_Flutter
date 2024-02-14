@@ -1,7 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:coinmarketcap/view/home_screen.dart';
+import 'package:coinmarketcap/view/home_page.dart';
 import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/login_page.dart';
+import 'text_form_field_settings.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String actionButtonText = 'Sign Up';
   String accountAction = 'Already have an account?';
   String accountActionButton = 'Log in';
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _setupAuthListener();
@@ -57,48 +59,67 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child:
-                setRegisterEmailTextField(textEdingController: emailController),
+                TextFormFieldSettings(textEditingController: emailController,),
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextField(
-              cursorColor: Colors.black,
-              obscureText: visibilityPassword,
-              obscuringCharacter: '•',
-              controller: passwordController,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12,
+            child: Form(
+              key: _formKey,
+              child: TextFormField(
+                cursorColor: Colors.black,
+                obscureText: visibilityPassword,
+                obscuringCharacter: '•',
+                controller: passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.blueAccent,
-                    width: 1.5,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.blueAccent,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      12,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(
-                    12,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(
+                        () {
+                          visibilityPassword == true
+                              ? visibilityPassword = false
+                              : visibilityPassword = true;
+                        },
+                      );
+                    },
+                    icon: visibilityPassword == true
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
                   ),
+                  hintText: 'Password',
                 ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(
-                      () {
-                        visibilityPassword == true
-                            ? visibilityPassword = false
-                            : visibilityPassword = true;
-                      },
-                    );
-                  },
-                  icon: visibilityPassword == true
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-                hintText: 'Password',
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Please enter your password';
+                  }else if(value.length < 6){
+                    return 'Your password must be 6 digits or more.';
+                  }else{
+                    return null;
+                  }
+                },
               ),
             ),
+          ),
+          TextButton(
+            onPressed: (){
+              var passwordRecovery = AuthChangeEvent.passwordRecovery;
+              debugPrint(passwordRecovery.toString());
+            },
+            child: const Text('Forgot Password?'),
           ),
           SizedBox(
             width: 250,
@@ -183,17 +204,16 @@ class _RegisterPageState extends State<RegisterPage> {
         debugPrint(data.toString());
         debugPrint(data.event.toString());
         final event = data.event;
-        if(event == AuthChangeEvent.initialSession){
+        if (event == AuthChangeEvent.initialSession) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const HomePage(),
             ),
           );
-        } 
-        else if (event == AuthChangeEvent.signedIn) {
+        } else if (event == AuthChangeEvent.signedIn) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const HomePage(),
             ),
           );
         }
