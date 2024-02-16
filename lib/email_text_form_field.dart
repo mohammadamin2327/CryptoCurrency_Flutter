@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 class TextFormFieldSettings extends StatelessWidget {
   final TextEditingController textEditingController;
-  final _formKey = GlobalKey<FormState>();
-  TextFormFieldSettings({super.key, required this.textEditingController});
+  final formKey;
+  const TextFormFieldSettings(
+      {super.key, required this.textEditingController, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formKey,
       child: TextFormField(
         cursorColor: Colors.black,
         controller: textEditingController,
