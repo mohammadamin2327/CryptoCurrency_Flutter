@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class TextFormFieldSettings extends StatelessWidget {
-  TextFormFieldSettings({super.key, required this.textEditingController});
-  TextEditingController textEditingController;
+  final TextEditingController textEditingController;
   final _formKey = GlobalKey<FormState>();
+  TextFormFieldSettings({super.key, required this.textEditingController});
 
   @override
   Widget build(BuildContext context) {

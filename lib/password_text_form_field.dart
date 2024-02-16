@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
 class PasswordTextFormField extends StatefulWidget {
-  TextEditingController textEditingController;
-  bool visibilityPassword;
-  PasswordTextFormField({super.key,required this.textEditingController,required this.visibilityPassword});
+  final TextEditingController textEditingController;
+  final bool visibilityPassword;
+  //final formKey;
+  const PasswordTextFormField({super.key,required this.textEditingController,required this.visibilityPassword});
 
   @override
   State<PasswordTextFormField> createState() => _PasswordTextFormFieldState();
 }
 
 class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var visibilityPassword = widget.visibilityPassword;
+   // GlobalKey<FormState> formKey = widget.formKey;
+    bool visibilityPassword = widget.visibilityPassword;
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Form(
-        key: _formKey,
+       // key: formKey,
         child: TextFormField(
           cursorColor: Colors.black,
           obscureText: visibilityPassword,

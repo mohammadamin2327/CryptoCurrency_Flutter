@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:coinmarketcap/register_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:coinmarketcap/register_settings.dart';
 import 'package:coinmarketcap/service/api_call.dart';
 import 'package:coinmarketcap/model/api_model.dart';
 import 'package:coinmarketcap/utils/constants.dart';
 import 'package:coinmarketcap/bottom_appbar.dart';
+import 'package:coinmarketcap/text_button.dart';
 import 'package:coinmarketcap/survey.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -80,28 +81,30 @@ class _HomePageState extends State<HomePage> {
                                 child: TextButton(
                                   onPressed: () {
                                     showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text('Log out'),
-                                            content: const Text(
-                                                'Do you want to Log out?'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () async {
-                                                  await RegisterSettings().signOut();
-                                                },
-                                                child: const Text('Accept'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text('Cancel'),
-                                              ),
-                                            ],
-                                          );
-                                        });
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Log out'),
+                                          content: const Text(
+                                              'Do you want to Log out?'),
+                                          actions: [
+                                            TextButtonWidget(
+                                              text: 'Accept',
+                                              onPressed: () async {
+                                                await RegisterSettings()
+                                                    .signOut();
+                                              },
+                                            ),
+                                            TextButtonWidget(
+                                              text: 'Cancel',
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   },
                                   child: const Text('Log out'),
                                 ),

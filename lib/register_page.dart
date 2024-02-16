@@ -1,8 +1,9 @@
 import 'package:coinmarketcap/password_text_form_field.dart';
-import 'package:coinmarketcap/register_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:coinmarketcap/view/home_page.dart';
+import 'package:coinmarketcap/register_settings.dart';
 import 'package:coinmarketcap/utils/constants.dart';
+import 'package:coinmarketcap/view/home_page.dart';
+import 'package:coinmarketcap/text_button.dart';
 import 'package:coinmarketcap/login_page.dart';
 import 'package:flutter/material.dart';
 import 'email_text_form_field.dart';
@@ -24,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String actionButtonText = 'Sign Up';
   String accountAction = 'Already have an account?';
   String accountActionButton = 'Log in';
+  final _formKey = GlobalKey<FormState>;
   @override
   void initState() {
     _setupAuthListener();
@@ -64,15 +66,15 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           PasswordTextFormField(
+            formKey: _formKey,
             textEditingController: passwordController,
             visibilityPassword: visibilityPassword,
           ),
-          TextButton(
+          TextButtonWidget(
+            text: 'Forgot Password?',
             onPressed: () {
               var passwordRecovery = AuthChangeEvent.passwordRecovery;
-              debugPrint(passwordRecovery.toString());
             },
-            child: const Text('Forgot Password?'),
           ),
           SizedBox(
             width: 250,
@@ -90,8 +92,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               onPressed: () async {
                 actionButtonText == 'Sign Up'
-                    ? await RegisterSettings().signUpNewUser(emailController, passwordController)
-                    : await RegisterSettings().signInWithEmail(emailController, passwordController);
+                    ? await RegisterSettings()
+                        .signUpNewUser(emailController, passwordController)
+                    : await RegisterSettings()
+                        .signInWithEmail(emailController, passwordController);
                 _setupAuthListener();
               },
               child: Text(
@@ -104,7 +108,12 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(accountAction),
-              TextButton(
+              TextButtonWidget(
+                textStyle: const TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20,
+                ),
+                text: accountActionButton,
                 onPressed: () {
                   setState(
                     () {
@@ -117,11 +126,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   );
                 },
-                child: Text(
-                  accountActionButton,
-                  style:
-                      const TextStyle(color: Colors.blueAccent, fontSize: 20),
-                ),
               ),
             ],
           ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:coinmarketcap/register_page.dart';
@@ -44,15 +46,81 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void initState() {
+    _connectivitySubscription = Connectivity().onConnectivityChanged.listen(
+      (event) {
+        debugPrint(event.toString());
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'coninMarketCap',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const RegisterPage(),
+    // _connectivitySubscription = Connectivity().onConnectivityChanged.listen(
+    //       (event) {},
+    //     );
+    return StreamBuilder<Object>(
+      stream: Connectivity().onConnectivityChanged,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return MaterialApp(
+            title: 'coninMarketCap',
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: const RegisterPage(),
+          );
+        } else if (snapshot.hasError) {
+          return MaterialApp(
+            title: 'coinMarketCap',
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Text('please check your connection then try again.'),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.amber),
+                    ),
+                    child: const Text('Try Again'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else {
+          return const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3.0,
+                  backgroundColor: Colors.transparent,
+                  color: Colors.blue,
+                ),
+              ),
+              Text('Please Check Your Connection'),
+            ],
+          );
+        }
+      },
     );
   }
 }

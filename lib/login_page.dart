@@ -1,9 +1,10 @@
 import 'package:coinmarketcap/password_text_form_field.dart';
-import 'package:coinmarketcap/register_settings.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:coinmarketcap/view/home_page.dart';
+import 'package:coinmarketcap/register_settings.dart';
 import 'package:coinmarketcap/utils/constants.dart';
+import 'package:coinmarketcap/view/home_page.dart';
 import 'package:coinmarketcap/register_page.dart';
+import 'package:coinmarketcap/text_button.dart';
 import 'package:flutter/material.dart';
 import 'email_text_form_field.dart';
 
@@ -86,8 +87,10 @@ class _LogInPageState extends State<LogInPage> {
               ),
               onPressed: () async {
                 actionButtonText == 'Log In'
-                    ? await RegisterSettings().signUpNewUser(emailController,passwordController)
-                    : await RegisterSettings().signInWithEmail(emailController,passwordController);
+                    ? await RegisterSettings()
+                        .signUpNewUser(emailController, passwordController)
+                    : await RegisterSettings()
+                        .signInWithEmail(emailController, passwordController);
                 _setupAuthListener();
               },
               child: Text(
@@ -103,7 +106,12 @@ class _LogInPageState extends State<LogInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(accountAction),
-              TextButton(
+              TextButtonWidget(
+                textStyle: const TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20,
+                ),
+                text: accountActionButton,
                 onPressed: () {
                   setState(
                     () {
@@ -117,11 +125,6 @@ class _LogInPageState extends State<LogInPage> {
                     },
                   );
                 },
-                child: Text(
-                  accountActionButton,
-                  style:
-                      const TextStyle(color: Colors.blueAccent, fontSize: 20),
-                ),
               ),
             ],
           ),
