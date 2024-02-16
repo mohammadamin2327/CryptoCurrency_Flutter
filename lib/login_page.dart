@@ -25,6 +25,7 @@ class _LogInPageState extends State<LogInPage> {
   String actionButtonText = 'Log In';
   String accountAction = 'Don\'t have an account';
   String accountActionButton = 'Sign Up';
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -62,10 +63,12 @@ class _LogInPageState extends State<LogInPage> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormFieldSettings(
+              formKey: _formKey,
               textEditingController: emailController,
             ),
           ),
           PasswordTextFormField(
+            formKey: _formKey,
             textEditingController: passwordController,
             visibilityPassword: visibilityPassword,
           ),
@@ -86,12 +89,14 @@ class _LogInPageState extends State<LogInPage> {
                 ),
               ),
               onPressed: () async {
-                actionButtonText == 'Log In'
-                    ? await RegisterSettings()
-                        .signUpNewUser(emailController, passwordController)
-                    : await RegisterSettings()
-                        .signInWithEmail(emailController, passwordController);
-                _setupAuthListener();
+                if (_formKey.currentState!.validate()) {
+                  actionButtonText == 'Log In'
+                      ? await RegisterSettings()
+                          .signUpNewUser(emailController, passwordController)
+                      : await RegisterSettings()
+                          .signInWithEmail(emailController, passwordController);
+                  _setupAuthListener();
+                }
               },
               child: Text(
                 actionButtonText,

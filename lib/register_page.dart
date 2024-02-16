@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String actionButtonText = 'Sign Up';
   String accountAction = 'Already have an account?';
   String accountActionButton = 'Log in';
-  final _formKey = GlobalKey<FormState>;
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _setupAuthListener();
@@ -62,6 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormFieldSettings(
+              formKey: _formKey,
               textEditingController: emailController,
             ),
           ),
@@ -91,12 +92,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               onPressed: () async {
-                actionButtonText == 'Sign Up'
-                    ? await RegisterSettings()
-                        .signUpNewUser(emailController, passwordController)
-                    : await RegisterSettings()
-                        .signInWithEmail(emailController, passwordController);
-                _setupAuthListener();
+                if (_formKey.currentState!.validate()) {
+                  actionButtonText == 'Sign Up'
+                      ? await RegisterSettings()
+                          .signUpNewUser(emailController, passwordController)
+                      : await RegisterSettings()
+                          .signInWithEmail(emailController, passwordController);
+                  _setupAuthListener();
+                }
               },
               child: Text(
                 actionButtonText,
